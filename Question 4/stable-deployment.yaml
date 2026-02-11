@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app-stable
+  labels:
+    app: web-app
+    track: stable
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: web-app
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: web-app
+        track: stable
+        version: v1
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.28
+          ports:
+            - containerPort: 80
+          command: ["/bin/sh", "-c"]
+          args:
+            - echo "STABLE v1" > /usr/share/nginx/html/index.html; exec nginx -g 'daemon off;'
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 8
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 13
+            timeoutSeconds: 4
+            failureThreshold: 3

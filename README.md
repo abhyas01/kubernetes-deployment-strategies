@@ -16,3 +16,4 @@
 - https://kubernetes.github.io/ingress-nginx/examples/canary/
 - https://kubernetes.io/docs/concepts/services-networking/ingress/
 - https://kubernetes.io/docs/reference/kubectl/generated/kubectl_annotate/
+- https://stackoverflow.com/a/28099946
